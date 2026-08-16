@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus — AML Intelligence Hub · Case Study by Swathi Susarla</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void:    #040810;
+  --navy:    #070D1A;
+  --surface: #0C1427;
+  --surface2:#111E35;
+  --border:  rgba(59,130,246,0.12);
+  --border2: rgba(59,130,246,0.22);
+  --blue:    #3B82F6;
+  --blue-dim:rgba(59,130,246,0.12);
+  --blue-glow:rgba(59,130,246,0.06);
+  --amber:   #F59E0B;
+  --red:     #EF4444;
+  --green:   #10B981;
+  --white:   #F0F4FF;
+  --mist:    #8899BB;
+  --dim:     #445577;
+  --body:   'DM Sans', sans-serif;
+  --display:'Syne', sans-serif;
+  --mono:   'DM Mono', monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--white);font-family:var(--body);font-size:16px;line-height:1.7;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:.9rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(4,8,16,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--display);font-size:1.1rem;font-weight:800;color:var(--white);text-decoration:none;letter-spacing:-0.02em}
+.nav-logo span{color:var(--blue)}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{font-size:.8rem;color:var(--mist);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{background:var(--blue)!important;color:var(--white)!important;padding:.45rem 1.1rem;border-radius:6px;letter-spacing:.03em!important}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 2rem 5rem;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(59,130,246,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.04) 1px,transparent 1px);background-size:80px 80px}
+.hero-glow{position:absolute;top:20%;left:10%;width:500px;height:500px;background:radial-gradient(circle,rgba(59,130,246,.1) 0%,transparent 70%);pointer-events:none}
+.hero-glow2{position:absolute;bottom:20%;right:10%;width:300px;height:300px;background:radial-gradient(circle,rgba(245,158,11,.06) 0%,transparent 70%);pointer-events:none}
+.hero-eyebrow{font-family:var(--mono);font-size:.72rem;color:var(--blue);letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .2s forwards}
+.hero h1{font-family:var(--display);font-size:clamp(3rem,8vw,7.5rem);font-weight:800;line-height:.92;letter-spacing:-.04em;margin-bottom:2rem;opacity:0;animation:fadeUp .8s .35s forwards}
+.hero h1 .accent{color:var(--blue)}
+.hero h1 .sub{display:block;color:var(--mist);font-weight:300;font-style:italic;font-family:var(--body);font-size:.33em;letter-spacing:0;margin-top:.8rem}
+.hero-meta{display:flex;gap:3rem;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .5s forwards}
+.hm-label{font-family:var(--mono);font-size:.68rem;color:var(--dim);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.25rem}
+.hm-val{font-size:.9rem;color:var(--mist);font-weight:300}
+.hero-scroll{position:absolute;bottom:2rem;right:2rem;display:flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.68rem;color:var(--dim);letter-spacing:.1em;animation:fadeIn 1s 1s both}
+.scroll-line{width:40px;height:1px;background:var(--dim);animation:scrollLine 2s 1.5s infinite}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:6px;padding:.4rem .9rem;font-family:var(--mono);font-size:.7rem;color:var(--amber);letter-spacing:.08em;margin-bottom:1rem;opacity:0;animation:fadeUp .8s .1s forwards}
+
+/* LAYOUT */
+.container{max-width:1100px;margin:0 auto;padding:0 2rem}
+.container-wide{max-width:1340px;margin:0 auto;padding:0 2rem}
+section{position:relative;z-index:1}
+
+/* SECTION EYEBROW */
+.eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+.ey-num{font-family:var(--mono);font-size:.7rem;color:var(--blue);letter-spacing:.1em}
+.ey-line{flex:1;max-width:40px;height:1px;background:var(--blue);opacity:.4}
+.ey-text{font-family:var(--mono);font-size:.7rem;color:var(--dim);text-transform:uppercase;letter-spacing:.12em}
+.section-h{font-family:var(--display);font-size:clamp(1.8rem,3.5vw,3rem);font-weight:800;letter-spacing:-.03em;margin-bottom:1rem}
+.section-p{color:var(--mist);font-weight:300;font-size:.95rem;line-height:1.8;max-width:680px}
+
+/* PROBLEM */
+.problem{padding:8rem 0 6rem;border-top:1px solid var(--border)}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:3rem}
+.stat-card{background:var(--surface);padding:2rem}
+.stat-num{font-family:var(--display);font-size:3.5rem;font-weight:800;color:var(--blue);line-height:1;margin-bottom:.5rem;letter-spacing:-.03em}
+.stat-label{font-size:.85rem;color:var(--mist);line-height:1.5}
+.problem-quote{font-family:var(--display);font-size:clamp(1.4rem,2.5vw,2.2rem);font-weight:700;line-height:1.25;letter-spacing:-.03em;margin-bottom:2rem;max-width:780px}
+.problem-quote .hl{color:var(--blue)}
+
+/* USER TYPES */
+.user-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:2rem}
+.user-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;position:relative;overflow:hidden}
+.user-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.u1::before{background:var(--blue)}
+.u2::before{background:var(--amber)}
+.u3::before{background:var(--green)}
+.user-role{font-family:var(--mono);font-size:.68rem;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem}
+.user-name{font-size:1rem;font-weight:500;color:var(--white);margin-bottom:.5rem}
+.user-desc{font-size:.85rem;color:var(--mist);font-weight:300;line-height:1.6}
+
+/* QUOTES */
+.quotes-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.quote-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.75rem;position:relative}
+.quote-card::before{content:'"';font-family:var(--display);font-size:5rem;color:var(--blue);opacity:.15;position:absolute;top:.5rem;left:1.2rem;line-height:1}
+.quote-text{font-size:.95rem;color:var(--white);font-style:italic;font-weight:300;line-height:1.75;margin-bottom:1.25rem;padding-top:.5rem}
+.quote-attr{font-family:var(--mono);font-size:.68rem;color:var(--dim);letter-spacing:.08em}
+
+/* PROCESS */
+.process-steps{display:flex;flex-direction:column}
+.proc-step{display:grid;grid-template-columns:90px 1fr;gap:2rem;padding:2.5rem 0;border-bottom:1px solid var(--border);align-items:start}
+.proc-step:last-child{border-bottom:none}
+.ps-left{display:flex;flex-direction:column;gap:.5rem}
+.ps-num{font-family:var(--mono);font-size:.7rem;color:var(--blue);letter-spacing:.1em}
+.ps-tool{font-family:var(--mono);font-size:.62rem;color:var(--dim);background:var(--surface2);border:1px solid var(--border);padding:3px 8px;border-radius:4px;letter-spacing:.06em;white-space:nowrap}
+.ps-title{font-family:var(--display);font-size:1.1rem;font-weight:700;margin-bottom:.5rem;letter-spacing:-.02em}
+.ps-body{font-size:.88rem;color:var(--mist);font-weight:300;line-height:1.75}
+.ps-insight{margin-top:1rem;padding:.8rem 1rem;background:var(--blue-dim);border-left:2px solid var(--blue);border-radius:0 8px 8px 0;font-size:.82rem;color:#90B8FF;font-style:italic;line-height:1.6}
+
+/* SCREENS */
+.screens{padding:6rem 0;border-top:1px solid var(--border)}
+.screen-tabs{display:flex;gap:6px;margin-bottom:2rem;overflow-x:auto;padding-bottom:4px}
+.stab{font-size:.78rem;padding:7px 14px;border:1px solid var(--border);border-radius:20px;background:transparent;color:var(--mist);cursor:pointer;font-family:var(--body);white-space:nowrap;transition:all .15s}
+.stab.on{background:var(--blue);border-color:var(--blue);color:var(--white);font-weight:500}
+.stab:hover:not(.on){border-color:var(--border2);color:var(--white)}
+.screen-display{display:none}.screen-display.on{display:block}
+
+/* DASHBOARD MOCKUP SHELL */
+.dash-shell{background:var(--navy);border:1px solid var(--border2);border-radius:16px;overflow:hidden;margin-bottom:1.5rem;font-family:var(--mono)}
+.dash-topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:.6rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
+.dash-dots{display:flex;gap:6px}
+.dash-dot{width:10px;height:10px;border-radius:50%}
+.dd-r{background:#EF4444}
+.dd-a{background:#F59E0B}
+.dd-g{background:#10B981}
+.dash-title-bar{font-size:.68rem;color:var(--dim);letter-spacing:.1em;text-transform:uppercase}
+.dash-actions{display:flex;gap:8px}
+.dash-act{font-size:.6rem;color:var(--mist);background:var(--surface2);border:1px solid var(--border);padding:3px 10px;border-radius:4px}
+.dash-body{display:flex;height:420px}
+.dash-sidebar{width:52px;background:var(--void);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:.75rem 0;gap:.6rem}
+.ds-icon{width:32px;height:32px;border-radius:8px;background:transparent;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;transition:background .15s}
+.ds-icon.active{background:var(--blue-dim)}
+.dash-main{flex:1;overflow:hidden;display:flex;flex-direction:column}
+
+/* ALERT QUEUE */
+.aq-topbar{padding:.6rem 1rem;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.aq-heading{font-size:.78rem;font-weight:500;color:var(--white);margin-right:.5rem;font-family:var(--display)}
+.sev-pill{font-size:.58rem;padding:3px 9px;border-radius:20px;cursor:pointer;font-family:var(--body)}
+.sp-all{background:rgba(255,255,255,.08);color:var(--white)}
+.sp-crit{background:rgba(239,68,68,.15);color:#F87171}
+.sp-high{background:rgba(245,158,11,.15);color:#FCD34D}
+.sp-med{background:rgba(234,179,8,.1);color:#FDE68A}
+.sp-low{background:rgba(16,185,129,.1);color:#6EE7B7}
+.aq-search{margin-left:auto;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:.58rem;color:var(--mist);font-family:var(--mono)}
+.aq-table{flex:1;overflow-y:auto}
+.aq-thead{display:grid;grid-template-columns:70px 80px 1fr 110px 70px 80px 80px 70px;padding:.4rem .75rem;border-bottom:1px solid var(--border);background:var(--void)}
+.aq-th{font-size:.55rem;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+.aq-row{display:grid;grid-template-columns:70px 80px 1fr 110px 70px 80px 80px 70px;padding:.45rem .75rem;border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s;align-items:center}
+.aq-row:hover{background:var(--blue-glow)}
+.aq-row.unread{border-left:2px solid var(--blue)}
+.aq-row.unread .aq-entity{font-weight:500;color:var(--white)}
+.aq-cell{font-size:.6rem;color:var(--mist);font-family:var(--mono)}
+.aq-cell.entity{font-size:.62rem;color:var(--white);font-family:var(--body)}
+.sev-badge{display:inline-flex;align-items:center;gap:4px;font-size:.55rem;padding:2px 7px;border-radius:20px;font-weight:500}
+.sev-c{background:rgba(239,68,68,.2);color:#F87171}
+.sev-h{background:rgba(245,158,11,.2);color:#FCD34D}
+.sev-m{background:rgba(234,179,8,.15);color:#FDE68A}
+.sev-l{background:rgba(16,185,129,.15);color:#6EE7B7}
+.risk-bar-wrap{display:flex;align-items:center;gap:4px}
+.risk-bar{height:4px;border-radius:2px;background:rgba(255,255,255,.08);flex:1;max-width:36px}
+.risk-fill{height:100%;border-radius:2px}
+.risk-num{font-size:.58rem;font-family:var(--mono)}
+.aq-btn{font-size:.52rem;padding:2px 8px;border:1px solid var(--border);border-radius:4px;color:var(--mist);background:transparent;cursor:pointer;font-family:var(--body)}
+.status-pill{font-size:.52rem;padding:2px 7px;border-radius:10px}
+.st-review{background:rgba(59,130,246,.2);color:#93C5FD}
+.st-open{background:rgba(245,158,11,.15);color:#FCD34D}
+
+/* CASE DETAIL */
+.case-grid{flex:1;display:grid;grid-template-columns:220px 1fr 240px;overflow:hidden}
+.case-col{border-right:1px solid var(--border);overflow-y:auto;padding:.75rem}
+.case-col:last-child{border-right:none}
+.cc-label{font-size:.55rem;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.35rem;margin-top:.6rem}
+.cc-label:first-child{margin-top:0}
+.cc-val{font-size:.65rem;color:var(--white);margin-bottom:.5rem;font-family:var(--mono)}
+.cc-val.muted{color:var(--mist)}
+.cc-sla{font-size:.65rem;color:#F87171;font-family:var(--mono);background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);padding:3px 8px;border-radius:4px;display:inline-block;margin-bottom:.5rem}
+.cc-timeline{display:flex;flex-direction:column;gap:0}
+.cc-event{display:flex;gap:.5rem;padding:.35rem 0;border-left:1px solid var(--border);padding-left:.6rem;margin-left:.3rem;position:relative}
+.cc-event::before{content:'';position:absolute;left:-4px;top:8px;width:7px;height:7px;border-radius:50%;background:var(--surface2);border:1px solid var(--border2)}
+.cc-etime{font-size:.52rem;color:var(--dim);font-family:var(--mono);white-space:nowrap}
+.cc-edesc{font-size:.58rem;color:var(--mist);line-height:1.4}
+/* txn table */
+.txn-table{width:100%;font-size:.58rem}
+.txn-table th{text-align:left;color:var(--dim);font-size:.52rem;text-transform:uppercase;letter-spacing:.07em;padding:.35rem .4rem;border-bottom:1px solid var(--border);font-weight:400}
+.txn-table td{padding:.35rem .4rem;color:var(--mist);border-bottom:1px solid rgba(255,255,255,.03);vertical-align:top}
+.txn-table td:first-child{color:var(--white);font-family:var(--mono)}
+.txn-flagged{border-left:2px solid var(--amber)!important}
+.flag-pill{font-size:.48rem;background:rgba(245,158,11,.15);color:#FCD34D;padding:1px 5px;border-radius:3px}
+/* action panel */
+.action-radio{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.75rem}
+.ar-item{display:flex;align-items:center;gap:.4rem;font-size:.6rem;color:var(--mist)}
+.ar-dot{width:10px;height:10px;border-radius:50%;border:1px solid var(--border2)}
+.ar-dot.sel{background:var(--blue);border-color:var(--blue)}
+.notes-area{background:var(--void);border:1px solid var(--border);border-radius:6px;padding:.5rem;font-size:.58rem;color:var(--dim);height:50px;width:100%;font-family:var(--mono);margin-bottom:.5rem}
+.submit-btn{background:var(--blue);border:none;border-radius:6px;padding:.4rem;width:100%;font-size:.62rem;color:var(--white);cursor:pointer;font-family:var(--body);font-weight:500}
+
+/* ENTITY GRAPH */
+.entity-graph-wrap{flex:1;position:relative;overflow:hidden;background:var(--void)}
+.eg-canvas{width:100%;height:100%;position:relative}
+.eg-node{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.48rem;color:var(--white);text-align:center;cursor:pointer;transition:transform .2s}
+.eg-node:hover{transform:scale(1.1);z-index:10}
+.eg-node-label{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);font-size:.45rem;color:var(--mist);white-space:nowrap;font-family:var(--mono)}
+svg.eg-svg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
+.eg-controls{position:absolute;top:.75rem;left:.75rem;display:flex;flex-direction:column;gap:.35rem}
+.eg-ctrl{font-size:.55rem;background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:3px 8px;color:var(--mist);cursor:pointer;font-family:var(--mono)}
+.eg-legend{position:absolute;bottom:.75rem;left:.75rem;display:flex;gap:.75rem}
+.eg-leg-item{display:flex;align-items:center;gap:.3rem;font-size:.52rem;color:var(--dim);font-family:var(--mono)}
+.eg-leg-dot{width:8px;height:8px;border-radius:50%}
+.eg-detail{position:absolute;top:.75rem;right:.75rem;width:180px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.75rem}
+.egd-label{font-size:.52rem;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.25rem}
+.egd-name{font-size:.68rem;color:var(--white);font-weight:500;margin-bottom:.5rem}
+.egd-row{display:flex;justify-content:space-between;font-size:.55rem;color:var(--mist);margin-bottom:.25rem;font-family:var(--mono)}
+.egd-row span:last-child{color:var(--white)}
+.egd-risk{font-size:.68rem;font-weight:500;color:#F87171;margin:.35rem 0}
+
+/* MANAGER DASHBOARD */
+.mgr-body{flex:1;padding:.75rem;display:flex;flex-direction:column;gap:.6rem;overflow-y:auto}
+.mgr-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem}
+.kpi-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.6rem}
+.kpi-val{font-family:var(--display);font-size:1.4rem;font-weight:800;line-height:1;margin-bottom:2px}
+.kpi-val.red{color:#F87171}
+.kpi-val.amber{color:#FCD34D}
+.kpi-val.green{color:#6EE7B7}
+.kpi-val.blue{color:#93C5FD}
+.kpi-label{font-size:.52rem;color:var(--dim);text-transform:uppercase;letter-spacing:.07em}
+.kpi-delta{font-size:.55rem;color:var(--mist);margin-top:2px}
+.mgr-row2{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;flex:1}
+.mgr-panel{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.7rem;overflow:hidden}
+.mp-title{font-size:.62rem;font-weight:500;color:var(--white);margin-bottom:.5rem;font-family:var(--display)}
+.team-table{width:100%;font-size:.55rem}
+.team-table th{color:var(--dim);font-size:.5rem;text-transform:uppercase;letter-spacing:.07em;padding:.25rem .3rem;border-bottom:1px solid var(--border);font-weight:400;text-align:left}
+.team-table td{padding:.28rem .3rem;color:var(--mist);border-bottom:1px solid rgba(255,255,255,.03);font-family:var(--mono)}
+.team-table td:first-child{color:var(--white);font-family:var(--body)}
+.perf-bar{height:3px;border-radius:2px;margin-top:2px}
+.chart-area{display:flex;align-items:flex-end;gap:4px;height:80px;padding-top:.5rem}
+.chart-bar-group{display:flex;gap:2px;align-items:flex-end;flex:1}
+.cb{border-radius:2px 2px 0 0;min-width:4px}
+.chart-labels{display:flex;gap:4px;margin-top:4px}
+.cl{flex:1;font-size:.42rem;color:var(--dim);text-align:center;font-family:var(--mono)}
+
+/* AUDIT TRAIL */
+.audit-body{flex:1;display:flex;flex-direction:column}
+.audit-filter{padding:.5rem .75rem;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.af-pill{font-size:.55rem;padding:2px 8px;border-radius:20px;border:1px solid var(--border);color:var(--mist);cursor:pointer;font-family:var(--body)}
+.af-pill.on{background:var(--blue-dim);border-color:var(--blue);color:var(--white)}
+.audit-table-wrap{flex:1;overflow-y:auto;padding:.35rem}
+.audit-row{display:grid;grid-template-columns:100px 110px 120px 1fr 80px;gap:.5rem;padding:.4rem .5rem;border-bottom:1px solid rgba(255,255,255,.03);align-items:center;font-size:.58rem;font-family:var(--mono)}
+.audit-row:hover{background:var(--blue-glow)}
+.audit-row.head{background:var(--void);color:var(--dim);font-size:.52rem;text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--border);position:sticky;top:0}
+.at-time{color:var(--dim)}
+.at-user{color:var(--white);font-family:var(--body);font-size:.6rem}
+.at-action{padding:2px 7px;border-radius:20px;font-size:.52rem;font-weight:500;display:inline-block}
+.aa-escalate{background:rgba(59,130,246,.2);color:#93C5FD}
+.aa-view{background:rgba(255,255,255,.06);color:var(--mist)}
+.aa-sar{background:rgba(16,185,129,.15);color:#6EE7B7}
+.aa-dismiss{background:rgba(245,158,11,.15);color:#FCD34D}
+.at-detail{color:var(--mist);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.at-case{color:var(--blue)}
+.anomaly-banner{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:.6rem .75rem;margin:.35rem;display:flex;align-items:flex-start;gap:.5rem}
+.ab-icon{font-size:.85rem;color:#F87171;flex-shrink:0;margin-top:1px}
+.ab-text{font-size:.6rem;color:#FECACA;line-height:1.5}
+.ab-text strong{display:block;font-weight:500;margin-bottom:2px}
+
+/* COMPETITIVE */
+.comp-table{width:100%;border-collapse:collapse;margin-top:2rem;font-size:.85rem}
+.comp-table th{text-align:left;padding:.9rem 1.1rem;font-family:var(--mono);font-size:.65rem;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;font-weight:400;border-bottom:1px solid var(--border2)}
+.comp-table th:not(:first-child){text-align:center}
+.comp-table td{padding:.9rem 1.1rem;border-bottom:1px solid var(--border);color:var(--mist);font-size:.85rem;vertical-align:middle}
+.comp-table td:first-child{font-weight:500;color:var(--white)}
+.comp-table td:not(:first-child){text-align:center}
+.comp-table tr:hover td{background:var(--blue-glow)}
+.tick{color:var(--green);font-size:1rem}
+.cross{color:#EF4444;opacity:.6;font-size:1rem}
+.nexus-col{color:#93C5FD!important;font-weight:500!important}
+
+/* AI TABLE */
+.ai-table{width:100%;border-collapse:collapse;margin-top:2rem;font-size:.85rem}
+.ai-table th{text-align:left;padding:.9rem 1.1rem;font-family:var(--mono);font-size:.65rem;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;font-weight:400;border-bottom:1px solid var(--border2)}
+.ai-table td{padding:1rem 1.1rem;border-bottom:1px solid var(--border);color:var(--mist);font-size:.83rem;vertical-align:top;line-height:1.6}
+.ai-table td:first-child{font-family:var(--mono);font-size:.75rem;color:var(--white);white-space:nowrap}
+.ai-table td:nth-child(2){color:#93C5FD}
+.ai-table tr:hover td{background:var(--blue-glow)}
+
+/* DECISIONS */
+.decisions-list{display:flex;flex-direction:column;gap:0}
+.dec-item{display:grid;grid-template-columns:60px 1fr;gap:1.5rem;padding:2rem 0;border-bottom:1px solid var(--border)}
+.dec-item:last-child{border-bottom:none}
+.dec-num{font-family:var(--display);font-size:2.5rem;font-weight:800;color:rgba(59,130,246,.2);line-height:1}
+.dec-title{font-size:1rem;font-weight:500;color:var(--white);margin-bottom:.4rem}
+.dec-body{font-size:.88rem;color:var(--mist);line-height:1.75;font-weight:300}
+.dec-tag{display:inline-block;font-family:var(--mono);font-size:.62rem;color:var(--blue);background:var(--blue-dim);padding:2px 8px;border-radius:4px;margin-top:.5rem}
+
+/* METRICS */
+.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:3rem}
+.metric-card{background:var(--surface);padding:1.75rem;transition:background .2s}
+.metric-card:hover{background:var(--surface2)}
+.metric-target{font-family:var(--display);font-size:2rem;font-weight:800;color:var(--blue);letter-spacing:-.03em;margin-bottom:.25rem}
+.metric-name{font-size:.85rem;color:var(--white);font-weight:500;margin-bottom:.25rem}
+.metric-why{font-size:.78rem;color:var(--mist);font-weight:300;line-height:1.5}
+
+/* DEMO */
+.demo-section{padding:5rem 0;border-top:1px solid var(--border)}
+.demo-inner{background:var(--surface);border:1px solid var(--border2);border-radius:22px;padding:3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.demo-h{font-family:var(--display);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:800;letter-spacing:-.03em;margin-bottom:1rem;line-height:1.1}
+.demo-h span{color:var(--blue)}
+.demo-p{color:var(--mist);font-size:.92rem;line-height:1.75;font-weight:300;margin-bottom:1.75rem}
+.demo-btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--blue);color:var(--white);padding:.85rem 1.75rem;border-radius:10px;font-family:var(--display);font-size:.9rem;font-weight:700;text-decoration:none;transition:opacity .2s,transform .2s}
+.demo-btn:hover{opacity:.88;transform:translateY(-1px)}
+.demo-sec-btn{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--border2);color:var(--mist);padding:.85rem 1.75rem;border-radius:10px;font-size:.88rem;text-decoration:none;margin-left:1rem;transition:color .2s,border-color .2s}
+.demo-sec-btn:hover{color:var(--white);border-color:var(--border2)}
+.demo-visual{display:flex;justify-content:center}
+.demo-frame{width:100%;background:var(--surface2);border:2px solid var(--border2);border-radius:16px;padding:2rem;font-family:var(--mono)}
+.df-label{font-size:.62rem;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem}
+.df-stat-row{display:flex;gap:.75rem;margin-bottom:.6rem}
+.df-stat{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .75rem;flex:1}
+.df-stat-n{font-size:1.1rem;font-weight:600;color:var(--blue);font-family:var(--display)}
+.df-stat-l{font-size:.52rem;color:var(--dim);text-transform:uppercase;letter-spacing:.07em}
+.df-note{font-size:.65rem;color:var(--mist);line-height:1.5;margin-bottom:1rem}
+.df-btn-wrap{display:flex;flex-direction:column;gap:.4rem}
+.df-btn{padding:.45rem;border-radius:8px;font-size:.65rem;text-align:center;font-family:var(--body);cursor:pointer;border:none}
+.df-btn-pri{background:var(--blue);color:var(--white)}
+.df-btn-sec{background:var(--surface);border:1px solid var(--border);color:var(--mist)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:3.5rem 0}
+.foot-inner{display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap}
+.foot-logo{font-family:var(--display);font-size:1.3rem;font-weight:800;color:var(--white);margin-bottom:.4rem;letter-spacing:-.03em}
+.foot-logo span{color:var(--blue)}
+.foot-by{font-size:.82rem;color:var(--mist);font-weight:300}
+.foot-links{display:flex;flex-direction:column;gap:.4rem}
+.foot-links a{font-size:.83rem;color:var(--mist);text-decoration:none;font-weight:300;transition:color .2s}
+.foot-links a:hover{color:var(--blue)}
+.foot-copy{font-family:var(--mono);font-size:.65rem;color:var(--dim);letter-spacing:.07em;text-align:right}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scrollLine{0%{transform:scaleX(0);transform-origin:left}50%{transform:scaleX(1);transform-origin:left}51%{transform:scaleX(1);transform-origin:right}100%{transform:scaleX(0);transform-origin:right}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hero h1{font-size:3rem}
+  .container,.container-wide{padding:0 1.25rem}
+  .stat-grid,.user-grid,.quotes-grid,.metrics-grid{grid-template-columns:1fr}
+  .demo-inner{grid-template-columns:1fr;gap:2rem;padding:2rem}
+  .proc-step{grid-template-columns:60px 1fr;gap:1rem}
+  .dash-body{height:320px}
+  .screen-tabs{gap:4px}
+  .stab{font-size:.7rem;padding:5px 10px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Nexus<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#screens">Screens</a></li>
+    <li><a href="#outcomes">Outcomes</a></li>
+    <li><a href="#" class="nav-cta">View prototype</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="hero-badge">⚠ Financial Crime Intelligence · B2B Enterprise SaaS</div>
+    <p class="hero-eyebrow">Case study · 2026 · UX/UI Design</p>
+    <h1>Nexus<span class="accent">.</span><span class="sub">Redesigning anti-money laundering for the analysts who fight financial crime every day</span></h1>
+    <div class="hero-meta">
+      <div><div class="hm-label">Platform</div><div class="hm-val">Desktop · Dark mode first</div></div>
+      <div><div class="hm-label">Domain</div><div class="hm-val">FinTech · AML · Compliance</div></div>
+      <div><div class="hm-label">Designer</div><div class="hm-val">Swathi Susarla</div></div>
+      <div><div class="hm-label">Domain experience</div><div class="hm-val">AML dashboards — Jocata</div></div>
+      <div><div class="hm-label">Tools</div><div class="hm-val">Figma · Figma AI Make · Stitch</div></div>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div>Scroll to explore</div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="container">
+    <div class="eyebrow reveal"><span class="ey-num">01</span><span class="ey-line"></span><span class="ey-text">The problem</span></div>
+    <p class="problem-quote reveal">AML analysts review <span class="hl">200+ flagged alerts per day</span> using software built when dial-up was the standard. They're burning out — and criminals are getting through.</p>
+    <p class="reveal section-p" style="margin-bottom:2.5rem">Oracle FCCM, SAS AML, Actimize — the dominant tools in this space have interfaces that treat analysts like database operators, not investigators. Context is scattered across 4 different screens. Pattern recognition is left entirely to human memory. Every case decision requires switching between tabs, copying case IDs by hand, and writing notes in a separate Word document. The cognitive load is unsustainable — and the cost is real: analysts miss suspicious patterns, cases breach SLA deadlines, and compliance managers have no visibility into the backlog until it's too late.</p>
+    <div class="stat-grid reveal">
+      <div class="stat-card"><div class="stat-num">200+</div><div class="stat-label">Alerts reviewed per analyst per day in large Indian banks. At this volume, pattern recognition from memory alone is impossible.</div></div>
+      <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Different screens a typical AML analyst switches between to gather context for a single case decision. Every switch is cognitive overhead.</div></div>
+      <div class="stat-card"><div class="stat-num">₹7,000Cr</div><div class="stat-label">Total AML fines imposed on Indian banks in the last 5 years by RBI. The UX problem has direct regulatory consequences.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- USER TYPES -->
+<section style="padding:3rem 0 6rem;border-top:1px solid var(--border)">
+  <div class="container">
+    <div class="eyebrow reveal"><span class="ey-num">02</span><span class="ey-line"></span><span class="ey-text">3 user types — 3 mental models</span></div>
+    <p class="section-h reveal">One system. Three completely different jobs to be done.</p>
+    <p class="reveal section-p" style="margin-bottom:2rem">Senior designers design for user types, not personas. Each role has a distinct workflow, a different relationship with data, and different definition of what "done" means.</p>
+    <div class="user-grid reveal">
+      <div class="user-card u1">
+        <div class="user-role">L1 Analyst</div>
+        <div class="user-name">Alert Triage Specialist</div>
+        <div class="user-desc">Processes 200+ alerts daily. Needs to quickly classify each as suspicious or false positive. Values: speed, context-at-a-glance, one-click decisions. Cognitive load is their enemy.</div>
+      </div>
+      <div class="user-card u2">
+        <div class="user-role">L2 Investigator</div>
+        <div class="user-name">Deep Investigation Lead</div>
+        <div class="user-desc">Handles escalated cases requiring deep analysis. Needs entity relationship mapping, full transaction history, document management. Values: comprehensiveness, traceability, evidence quality.</div>
+      </div>
+      <div class="user-card u3">
+        <div class="user-role">Compliance Manager</div>
+        <div class="user-name">Team & Regulatory Oversight</div>
+        <div class="user-desc">Monitors team SLAs, case backlogs, SAR filing rates. Needs team performance metrics, regulatory deadline tracking, audit readiness. Values: control, predictability, regulatory confidence.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section style="padding:5rem 0;border-top:1px solid var(--border)" id="research">
+  <div class="container">
+    <div class="eyebrow reveal"><span class="ey-num">03</span><span class="ey-line"></span><span class="ey-text">Research — what analysts actually said</span></div>
+    <p class="section-h reveal" style="margin-bottom:2rem">The tools exist. The workflows are broken.</p>
+    <div class="quotes-grid reveal">
+      <div class="quote-card"><p class="quote-text">I spend 15 minutes just gathering context before I can make a decision on one case. By the time I've checked the customer profile, the transaction history, and cross-referenced the watchlist — I've forgotten what made the alert suspicious in the first place.</p><div class="quote-attr">— L1 Analyst · Large private sector bank · 4 years experience</div></div>
+      <div class="quote-card"><p class="quote-text">The system shows me a risk score of 87 with no explanation. I don't know if that's because of the amount, the geography, or the customer type. I'm just supposed to trust the number — but I can't file a SAR based on a number with no reasoning.</p><div class="quote-attr">— L2 Investigator · Mid-sized cooperative bank · 6 years experience</div></div>
+      <div class="quote-card"><p class="quote-text">My team has 340 open cases and I have no idea which ones are about to breach their SLA deadline until one of my analysts comes to tell me. I manage compliance by WhatsApp messages. That can't be right.</p><div class="quote-attr">— Compliance Manager · Public sector bank · 11 years experience</div></div>
+      <div class="quote-card"><p class="quote-text">If I could see the network of who this customer is connected to — on the same screen as their transactions — I could spot layering schemes in 2 minutes instead of 20. Right now I draw that map by hand on paper.</p><div class="quote-attr">— L2 Investigator · Foreign bank branch · 8 years experience</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETITIVE -->
+<section style="padding:5rem 0;border-top:1px solid var(--border)">
+  <div class="container">
+    <div class="eyebrow reveal"><span class="ey-num">04</span><span class="ey-line"></span><span class="ey-text">Competitive analysis</span></div>
+    <p class="section-h reveal">What every existing tool gets wrong.</p>
+    <table class="comp-table reveal">
+      <thead><tr><th>Design capability</th><th>Oracle FCCM</th><th>Actimize</th><th>SAS AML</th><th>Nexus</th></tr></thead>
+      <tbody>
+        <tr><td>Context unified on one screen</td><td class="cross">✕</td><td class="cross">✕</td><td class="cross">✕</td><td class="tick nexus-col">✓</td></tr>
+        <tr><td>Risk score with explanation</td><td class="cross">✕</td><td class="cross">✕</td><td class="cross">✕</td><td class="tick nexus-col">✓</td></tr>
+        <tr><td>Entity relationship visualisation</td><td class="cross">✕</td><td class="tick">✓ (basic)</td><td class="cross">✕</td><td class="tick nexus-col">✓ (filtered)</td></tr>
+        <tr><td>Keyboard-first workflow</td><td class="cross">✕</td><td class="cross">✕</td><td class="cross">✕</td><td class="tick nexus-col">✓</td></tr>
+        <tr><td>Manager SLA visibility</td><td class="cross">✕</td><td class="tick">✓ (reports)</td><td class="tick">✓ (reports)</td><td class="tick nexus-col">✓ (real-time)</td></tr>
+        <tr><td>Dark mode for long-shift use</td><td class="cross">✕</td><td class="cross">✕</td><td class="cross">✕</td><td class="tick nexus-col">✓</td></tr>
+        <tr><td>Audit trail with anomaly detection</td><td class="cross">✕</td><td class="cross">✕</td><td class="tick">✓ (basic)</td><td class="tick nexus-col">✓ (AI-flagged)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section style="padding:6rem 0;border-top:1px solid var(--border)" id="process">
+  <div class="container">
+    <div class="eyebrow reveal"><span class="ey-num">05</span><span class="ey-line"></span><span class="ey-text">Design process</span></div>
+    <p class="section-h reveal">From domain knowledge to production design.</p>
+    <p class="reveal section-p" style="margin-bottom:3rem">This project is built on real professional experience — I designed AML compliance tooling in a previous engagement. Nexus is what I would build with full creative freedom: no legacy constraints, no database-first thinking, pure UX logic.</p>
+    <div class="process-steps">
+      <div class="proc-step reveal">
+        <div class="ps-left"><span class="ps-num">01</span><span class="ps-tool">Domain research</span></div>
+        <div><p class="ps-title">Starting from real AML knowledge</p><p class="ps-body">My foundation is practical: I have designed compliance dashboards in a professional AML engagement (under NDA). Before sketching Nexus, I documented what I knew — the alert lifecycle, the escalation workflow, SAR filing requirements under PMLA, the role of FIU-IND, and the specific cognitive challenges of shift-based alert review. Nexus is informed by domain expertise, not just design principles.</p><div class="ps-insight">Nexus case study interview answer: "I have professional experience designing AML tooling, which gave me deep domain knowledge about alert workflows and compliance requirements. This project represents my vision of what the category could become."</div></div>
+      </div>
+      <div class="proc-step reveal">
+        <div class="ps-left"><span class="ps-num">02</span><span class="ps-tool">User research</span></div>
+        <div><p class="ps-title">4 analyst interviews — surfacing the real workflow</p><p class="ps-body">Four informal conversations with banking compliance professionals at different experience levels. The recurring theme: every analyst had developed personal workarounds — Excel notes, paper sketches of entity networks, WhatsApp messages to managers. These workarounds are not laziness. They are evidence that the existing tools fail to support the actual workflow. Every workaround became a Nexus feature.</p></div>
+      </div>
+      <div class="proc-step reveal">
+        <div class="ps-left"><span class="ps-num">03</span><span class="ps-tool">Figma AI Make</span></div>
+        <div><p class="ps-title">AI-generated layout foundations — then completely rebuilt</p><p class="ps-body">Used Figma AI Make to generate initial layout structures for the 3-column case detail screen and the alert queue table. The AI correctly identified the general structure (list on left, detail in centre, actions on right) but consistently failed on the compliance-specific details: it showed generic data tables rather than risk-colour-coded rows, generic text inputs rather than decision radio buttons with audit implications, and no concept of the SLA deadline as a first-class UI element.</p><div class="ps-insight">What AI built: skeleton. What I built: the AML-specific logic — risk vocabulary, keyboard shortcuts, audit trail integration, SLA urgency communication. Every compliance-specific decision in Nexus is mine.</div></div>
+      </div>
+      <div class="proc-step reveal">
+        <div class="ps-left"><span class="ps-num">04</span><span class="ps-tool">Design system</span></div>
+        <div><p class="ps-title">A risk colour vocabulary — not just a palette</p><p class="ps-body">The Nexus colour system is semantic, not aesthetic. Critical: #EF4444 red — used only for imminent threats and overdue SLAs. High: #F59E0B amber — elevated risk, requires attention today. Medium: #EAB308 yellow — monitor, not urgent. Low: #10B981 green — baseline, no action needed. Blue #3B82F6: primary UI, information, system actions. This vocabulary is documented as a rule — no element uses these colours for decorative purposes. When everything urgent is red, red means something.</p></div>
+      </div>
+      <div class="proc-step reveal">
+        <div class="ps-left"><span class="ps-num">05</span><span class="ps-tool">Figma</span></div>
+        <div><p class="ps-title">5 screens — each solving a distinct workflow problem</p><p class="ps-body">Alert Queue (L1 triage speed), Case Detail (L2 investigation context), Entity Graph (relationship pattern recognition), Compliance Manager Dashboard (leadership visibility), Audit Trail (regulatory traceability). Each screen was designed for its user type — different information density, different primary actions, different definition of "task complete."</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENS -->
+<section class="screens" id="screens">
+  <div class="container-wide">
+    <div class="container">
+      <div class="eyebrow reveal"><span class="ey-num">06</span><span class="ey-line"></span><span class="ey-text">5 key screens</span></div>
+      <p class="section-h reveal">Every screen. Every decision documented.</p>
+      <div class="screen-tabs reveal">
+        <button class="stab on" onclick="showScreen('alert',this)">Alert Queue</button>
+        <button class="stab" onclick="showScreen('case',this)">Case Detail</button>
+        <button class="stab" onclick="showScreen('entity',this)">Entity Graph</button>
+        <button class="stab" onclick="showScreen('manager',this)">Manager Dashboard</button>
+        <button class="stab" onclick="showScreen('audit',this)">Audit Trail</button>
+      </div>
+    </div>
+
+    <!-- ALERT QUEUE -->
+    <div class="screen-display on" id="sc-alert">
+      <div class="container">
+        <div class="dash-shell">
+          <div class="dash-topbar">
+            <div class="dash-dots"><div class="dash-dot dd-r"></div><div class="dash-dot dd-a"></div><div class="dash-dot dd-g"></div></div>
+            <div class="dash-title-bar">Nexus · Alert Management · Axis Bank AML</div>
+            <div class="dash-actions"><div class="dash-act">Export</div><div class="dash-act">⚙ Filters</div></div>
+          </div>
+          <div class="dash-body">
+            <div class="dash-sidebar">
+              <div class="ds-icon active">⬡</div>
+              <div class="ds-icon">◈</div>
+              <div class="ds-icon">◉</div>
+              <div class="ds-icon">▲</div>
+              <div class="ds-icon" style="margin-top:auto">⚙</div>
+            </div>
+            <div class="dash-main">
+              <div class="aq-topbar">
+                <span class="aq-heading">Alert Queue</span>
+                <span class="sev-pill sp-all">All 247</span>
+                <span class="sev-pill sp-crit">Critical 12</span>
+                <span class="sev-pill sp-high">High 38</span>
+                <span class="sev-pill sp-med">Medium 89</span>
+                <span class="sev-pill sp-low">Low 108</span>
+                <div class="aq-search">🔍 Search alerts...</div>
+              </div>
+              <div class="aq-table">
+                <div class="aq-thead">
+                  <div class="aq-th">Severity</div>
+                  <div class="aq-th">Alert ID</div>
+                  <div class="aq-th">Entity</div>
+                  <div class="aq-th">Alert Type</div>
+                  <div class="aq-th">Risk</div>
+                  <div class="aq-th">Amount</div>
+                  <div class="aq-th">Status</div>
+                  <div class="aq-th">Action</div>
+                </div>
+                <div class="aq-row unread">
+                  <div class="aq-cell"><span class="sev-badge sev-c">● Critical</span></div>
+                  <div class="aq-cell">ALT-9847</div>
+                  <div class="aq-cell entity">Sunrise Exports Pvt. Ltd.</div>
+                  <div class="aq-cell">Structuring</div>
+                  <div class="aq-cell"><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-fill" style="width:94%;background:#EF4444"></div></div><span class="risk-num" style="color:#F87171">94</span></div></div>
+                  <div class="aq-cell">₹2.4Cr</div>
+                  <div class="aq-cell"><span class="status-pill st-review">In Review</span></div>
+                  <div class="aq-cell"><button class="aq-btn">Open →</button></div>
+                </div>
+                <div class="aq-row unread">
+                  <div class="aq-cell"><span class="sev-badge sev-c">● Critical</span></div>
+                  <div class="aq-cell">ALT-9831</div>
+                  <div class="aq-cell entity">Mehta Trading Co.</div>
+                  <div class="aq-cell">Cross-border</div>
+                  <div class="aq-cell"><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-fill" style="width:91%;background:#EF4444"></div></div><span class="risk-num" style="color:#F87171">91</span></div></div>
+                  <div class="aq-cell">₹8.7Cr</div>
+                  <div class="aq-cell"><span class="status-pill st-open">Open</span></div>
+                  <div class="aq-cell"><button class="aq-btn">Open →</button></div>
+                </div>
+                <div class="aq-row">
+                  <div class="aq-cell"><span class="sev-badge sev-h">● High</span></div>
+                  <div class="aq-cell">ALT-9819</div>
+                  <div class="aq-cell entity">R.K. Infrastructure Ltd.</div>
+                  <div class="aq-cell">PEP Related</div>
+                  <div class="aq-cell"><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-fill" style="width:78%;background:#F59E0B"></div></div><span class="risk-num" style="color:#FCD34D">78</span></div></div>
+                  <div class="aq-cell">₹1.1Cr</div>
+                  <div class="aq-cell"><span class="status-pill st-open">Open</span></div>
+                  <div class="aq-cell"><button class="aq-btn">Open →</button></div>
+                </div>
+                <div class="aq-row">
+                  <div class="aq-cell"><span class="sev-badge sev-h">● High</span></div>
+                  <div class="aq-cell">ALT-9804</div>
+                  <div class="aq-cell entity">Global Gems International</div>
+                  <div class="aq-cell">Unusual Cash</div>
+                  <div class="aq-cell"><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-fill" style="width:74%;background:#F59E0B"></div></div><span class="risk-num" style="color:#FCD34D">74</span></div></div>
+                  <div class="aq-cell">₹65L</div>
+                  <div class="aq-cell"><span class="status-pill st-open">Open</span></div>
+                  <div class="aq-cell"><button class="aq-btn">Open →</button></div>
+                </div>
+                <div class="aq-row">
+                  <div class="aq-cell"><span class="sev-badge sev-m">● Medium</span></div>
+                  <div class="aq-cell">ALT-9798</div>
+                  <div class="aq-cell entity">Priya Fashion House</div>
+                  <div class="aq-cell">Velocity</div>
+                  <div class="aq-cell"><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-fill" style="width:54%;background:#EAB308"></div></div><span class="risk-num" style="color:#FDE68A">54</span></div></div>
+                  <div class="aq-cell">₹18L</div>
+                  <div class="aq-cell"><span class="status-pill st-open">Open</span></div>
+                  <div class="aq-cell"><button class="aq-btn">Open →</button></div>
+                </div>
+                <div class="aq-row">
+                  <div class="aq-cell"><span class="sev-badge sev-l">● Low</span></div>
+                  <div class="aq-cell">ALT-9782</div>
+                  <div class="aq-cell entity">Shree Sai Traders</div>
+                  <div class="aq-cell">Dormant Account</div>
+                  <div class="aq-cell"><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-fill" style="width:31%;background:#10B981"></div></div><span class="risk-num" style="color:#6EE7B7">31</span></div></div>
+                  <div class="aq-cell">₹4.2L</div>
+                  <div class="aq-cell"><span class="status-pill st-open">Open</span></div>
+                  <div class="aq-cell"><button class="aq-btn">Open →</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dec-item reveal" style="padding-top:1.5rem;border-top:none">
+          <div class="dec-num">↑</div>
+          <div><div class="dec-title">Progressive disclosure — show 3 data points, hide the rest until needed</div><div class="dec-body">Junior designers show everything. Senior designers hide what isn't needed right now. The alert queue shows only the data needed to decide whether to open a case — severity, entity, type, risk score, amount, status. Everything else lives one click away in the case detail. This reduces cognitive load from 12 data points to 6, enabling faster triage.</div><span class="dec-tag">UX principle: Progressive disclosure</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASE DETAIL -->
+    <div class="screen-display" id="sc-case">
+      <div class="container">
+        <div class="dash-shell">
+          <div class="dash-topbar">
+            <div class="dash-dots"><div class="dash-dot dd-r"></div><div class="dash-dot dd-a"></div><div class="dash-dot dd-g"></div></div>
+            <div class="dash-title-bar">Case Detail · ALT-9847 · Sunrise Exports Pvt. Ltd.</div>
+            <div class="dash-actions"><div class="dash-act">← Back to queue</div><div class="dash-act">⋯ More</div></div>
+          </div>
+          <div class="dash-body">
+            <div class="dash-sidebar">
+              <div class="ds-icon active">⬡</div><div class="ds-icon">◈</div><div class="ds-icon">◉</div><div class="ds-icon">▲</div>
+              <div class="ds-icon" style="margin-top:auto">⚙</div>
+            </div>
+            <div class="dash-main">
+              <div class="case-grid">
+                <!-- LEFT: Case metadata -->
+                <div class="case-col">
+                  <div class="cc-label">Case ID</div>
+                  <div class="cc-val">ALT-9847</div>
+                  <div class="cc-label">Entity</div>
+                  <div class="cc-val">Sunrise Exports Pvt. Ltd.</div>
+                  <div class="cc-label">Alert Type</div>
+                  <div class="cc-val">Structuring — Multiple cash deposits below ₹10L threshold</div>
+                  <div class="cc-label">Risk Score</div>
+                  <div class="cc-val" style="color:#F87171">94 / 100<br><span style="font-size:.52rem;color:var(--mist)">Unusual deposits + cross-border + PEP link</span></div>
+                  <div class="cc-label">SLA Deadline</div>
+                  <div class="cc-sla">⚠ 2 days remaining</div>
+                  <div class="cc-label">Assigned To</div>
+                  <div class="cc-val">Priya Sharma (L1)</div>
+                  <div class="cc-label">Case Timeline</div>
+                  <div class="cc-timeline">
+                    <div class="cc-event"><span class="cc-etime">09:14</span><span class="cc-edesc">Alert triggered by system</span></div>
+                    <div class="cc-event"><span class="cc-etime">09:18</span><span class="cc-edesc">Auto-assigned to analyst</span></div>
+                    <div class="cc-event"><span class="cc-etime">10:02</span><span class="cc-edesc">Document requested</span></div>
+                    <div class="cc-event"><span class="cc-etime">Now</span><span class="cc-edesc">Under review</span></div>
+                  </div>
+                </div>
+                <!-- CENTRE: Transaction table -->
+                <div class="case-col" style="padding:.6rem .75rem">
+                  <div style="font-size:.62rem;font-weight:500;color:var(--white);margin-bottom:.5rem;font-family:var(--display)">Transaction History — Last 90 days</div>
+                  <table class="txn-table">
+                    <thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Channel</th><th>Country</th><th>Flag</th></tr></thead>
+                    <tbody>
+                      <tr class="txn-flagged"><td>Jan 15</td><td>Cash deposit</td><td>₹9.8L</td><td>Branch</td><td>India</td><td><span class="flag-pill">Structured</span></td></tr>
+                      <tr class="txn-flagged"><td>Jan 14</td><td>Cash deposit</td><td>₹9.6L</td><td>Branch</td><td>India</td><td><span class="flag-pill">Structured</span></td></tr>
+                      <tr><td>Jan 12</td><td>Wire transfer</td><td>₹24L</td><td>SWIFT</td><td>UAE</td><td>—</td></tr>
+                      <tr class="txn-flagged"><td>Jan 10</td><td>Cash deposit</td><td>₹9.9L</td><td>Branch</td><td>India</td><td><span class="flag-pill">Structured</span></td></tr>
+                      <tr><td>Jan 8</td><td>Inward RTGS</td><td>₹1.2Cr</td><td>Digital</td><td>India</td><td>—</td></tr>
+                      <tr><td>Jan 5</td><td>Wire transfer</td><td>₹18L</td><td>SWIFT</td><td>Singapore</td><td>—</td></tr>
+                      <tr><td>Jan 2</td><td>Cash deposit</td><td>₹9.4L</td><td>Branch</td><td>India</td><td>—</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- RIGHT: Actions -->
+                <div class="case-col">
+                  <div class="cc-label">Case Decision</div>
+                  <div class="action-radio">
+                    <div class="ar-item"><div class="ar-dot sel"></div>Escalate to L2 Investigation</div>
+                    <div class="ar-item"><div class="ar-dot"></div>File SAR with FIU-IND</div>
+                    <div class="ar-item"><div class="ar-dot"></div>Dismiss — False positive</div>
+                  </div>
+                  <div class="cc-label">Priority</div>
+                  <div style="display:flex;gap:.3rem;margin-bottom:.6rem">
+                    <span class="sev-pill sp-crit" style="cursor:pointer">Critical</span>
+                    <span class="sev-pill sp-high">High</span>
+                  </div>
+                  <div class="cc-label">Case Notes</div>
+                  <div class="notes-area">Multiple cash deposits just below ₹10L threshold over 4 days. Pattern consistent with structuring. Cross-border transfers to UAE and Singapore. Recommend L2 investigation + enhanced due diligence on UBO.</div>
+                  <div class="cc-label">Documents</div>
+                  <div style="background:var(--void);border:1px dashed var(--border2);border-radius:6px;padding:.5rem;text-align:center;font-size:.55rem;color:var(--dim);margin-bottom:.5rem">+ Upload evidence</div>
+                  <button class="submit-btn">Submit Decision</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dec-item reveal" style="padding-top:1.5rem;border-top:none">
+          <div class="dec-num">↑</div>
+          <div><div class="dec-title">Risk score with explanation — not just a number</div><div class="dec-body">"Risk score: 94" is meaningless. "Risk score: 94 — Unusual deposits + cross-border transfers + PEP relationship" tells the analyst exactly what factors contributed. This is the difference between a tool that displays data and one that supports decision-making. An analyst cannot file a SAR based on a number — they need reasons. Nexus provides them inline, at the point of decision.</div><span class="dec-tag">UX principle: Explanatory design</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENTITY GRAPH -->
+    <div class="screen-display" id="sc-entity">
+      <div class="container">
+        <div class="dash-shell">
+          <div class="dash-topbar">
+            <div class="dash-dots"><div class="dash-dot dd-r"></div><div class="dash-dot dd-a"></div><div class="dash-dot dd-g"></div></div>
+            <div class="dash-title-bar">Entity Relationship Map · Sunrise Exports Pvt. Ltd. · Case ALT-9847</div>
+            <div class="dash-actions"><div class="dash-act">Filter</div><div class="dash-act">Export</div></div>
+          </div>
+          <div class="dash-body">
+            <div class="dash-sidebar"><div class="ds-icon">⬡</div><div class="ds-icon active">◈</div><div class="ds-icon">◉</div><div class="ds-icon">▲</div><div class="ds-icon" style="margin-top:auto">⚙</div></div>
+            <div class="entity-graph-wrap">
+              <svg class="eg-svg" viewBox="0 0 760 380" xmlns="http://www.w3.org/2000/svg">
+                <!-- connection lines -->
+                <line x1="380" y1="175" x2="190" y2="100" stroke="rgba(239,68,68,0.5)" stroke-width="2.5" stroke-dasharray="0"/>
+                <line x1="380" y1="175" x2="570" y2="90" stroke="rgba(239,68,68,0.4)" stroke-width="2"/>
+                <line x1="380" y1="175" x2="160" y2="260" stroke="rgba(245,158,11,0.5)" stroke-width="2"/>
+                <line x1="380" y1="175" x2="590" y2="270" stroke="rgba(245,158,11,0.4)" stroke-width="1.5"/>
+                <line x1="380" y1="175" x2="280" y2="320" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+                <line x1="380" y1="175" x2="510" y2="340" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+                <!-- txn labels on lines -->
+                <text x="270" y="128" font-size="7" fill="rgba(239,68,68,0.8)" font-family="DM Mono,monospace">₹42L · 8 txns</text>
+                <text x="480" y="118" font-size="7" fill="rgba(239,68,68,0.7)" font-family="DM Mono,monospace">₹18L · 3 txns</text>
+                <text x="240" y="235" font-size="7" fill="rgba(245,158,11,0.8)" font-family="DM Mono,monospace">₹8.4L · PEP</text>
+              </svg>
+              <!-- CENTRAL NODE -->
+              <div class="eg-node" style="width:68px;height:68px;background:rgba(239,68,68,0.25);border:2px solid #EF4444;top:141px;left:346px">
+                <div style="text-align:center"><div style="font-size:.55rem;font-weight:600;line-height:1.2">Sunrise<br>Exports</div></div>
+                <div class="eg-node-label">HIGH RISK · 94</div>
+              </div>
+              <!-- SATELLITE NODES -->
+              <div class="eg-node" style="width:44px;height:44px;background:rgba(239,68,68,0.18);border:1.5px solid rgba(239,68,68,0.6);top:78px;left:168px">
+                <div style="font-size:.45rem;text-align:center;line-height:1.2">Shell<br>Corp A</div>
+                <div class="eg-node-label">UAE · Risk 87</div>
+              </div>
+              <div class="eg-node" style="width:44px;height:44px;background:rgba(239,68,68,0.15);border:1.5px solid rgba(239,68,68,0.5);top:68px;left:548px">
+                <div style="font-size:.45rem;text-align:center;line-height:1.2">Offshore<br>Entity</div>
+                <div class="eg-node-label">Singapore</div>
+              </div>
+              <div class="eg-node" style="width:42px;height:42px;background:rgba(245,158,11,0.2);border:1.5px solid rgba(245,158,11,0.5);top:239px;left:139px">
+                <div style="font-size:.45rem;text-align:center;line-height:1.2">PEP<br>Contact</div>
+                <div class="eg-node-label">Watchlist</div>
+              </div>
+              <div class="eg-node" style="width:38px;height:38px;background:rgba(245,158,11,0.15);border:1.5px solid rgba(245,158,11,0.4);top:251px;left:571px">
+                <div style="font-size:.42rem;text-align:center">Bank<br>Acc.</div>
+                <div class="eg-node-label">Flagged</div>
+              </div>
+              <div class="eg-node" style="width:30px;height:30px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.2);top:305px;left:265px">
+                <div style="font-size:.4rem;text-align:center">Vendor</div>
+              </div>
+              <div class="eg-node" style="width:30px;height:30px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.2);top:325px;left:495px">
+                <div style="font-size:.4rem;text-align:center">Acc 3</div>
+              </div>
+              <!-- controls -->
+              <div class="eg-controls">
+                <div class="eg-ctrl">+ Zoom</div>
+                <div class="eg-ctrl">− Zoom</div>
+                <div class="eg-ctrl">⤢ Fit</div>
+              </div>
+              <!-- legend -->
+              <div class="eg-legend">
+                <div class="eg-leg-item"><div class="eg-leg-dot" style="background:#EF4444"></div>High risk</div>
+                <div class="eg-leg-item"><div class="eg-leg-dot" style="background:#F59E0B"></div>Medium risk</div>
+                <div class="eg-leg-item"><div class="eg-leg-dot" style="background:rgba(255,255,255,0.3)"></div>Low / unknown</div>
+              </div>
+              <!-- detail panel -->
+              <div class="eg-detail">
+                <div class="egd-label">Selected entity</div>
+                <div class="egd-name">Sunrise Exports Pvt. Ltd.</div>
+                <div class="egd-risk">Risk score: 94</div>
+                <div class="egd-row"><span>Type</span><span>Private Ltd.</span></div>
+                <div class="egd-row"><span>Registered</span><span>Mumbai</span></div>
+                <div class="egd-row"><span>Connections</span><span>6 entities</span></div>
+                <div class="egd-row"><span>High-risk links</span><span style="color:#F87171">3</span></div>
+                <div class="egd-row"><span>Watchlist</span><span style="color:#FCD34D">1 match</span></div>
+                <button style="width:100%;margin-top:.5rem;background:var(--blue);border:none;border-radius:5px;padding:.3rem;font-size:.58rem;color:var(--white);cursor:pointer;font-family:var(--body)">View full profile →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dec-item reveal" style="padding-top:1.5rem;border-top:none">
+          <div class="dec-num">↑</div>
+          <div><div class="dec-title">Filtered network graph — 6 highest-risk nodes, not 50</div><div class="dec-body">A fully expanded entity network with 50 nodes is visually impressive and completely useless. An analyst doesn't need to see every connection — they need to see the highest-risk connections, and understand why they're high risk. Nexus filters to the 8 most significant connected entities by default, with a "Show all" expand option. The right panel immediately shows the selected entity's risk score, watchlist status, and flagged transaction count. The graph is navigation, not decoration.</div><span class="dec-tag">UX principle: Contextual filtering</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MANAGER DASHBOARD -->
+    <div class="screen-display" id="sc-manager">
+      <div class="container">
+        <div class="dash-shell">
+          <div class="dash-topbar">
+            <div class="dash-dots"><div class="dash-dot dd-r"></div><div class="dash-dot dd-a"></div><div class="dash-dot dd-g"></div></div>
+            <div class="dash-title-bar">Compliance Manager Overview · Axis Bank AML · Week of Jan 27, 2026</div>
+            <div class="dash-actions"><div class="dash-act">Export report</div><div class="dash-act">⚙ Settings</div></div>
+          </div>
+          <div class="dash-body">
+            <div class="dash-sidebar"><div class="ds-icon">⬡</div><div class="ds-icon">◈</div><div class="ds-icon active">◉</div><div class="ds-icon">▲</div><div class="ds-icon" style="margin-top:auto">⚙</div></div>
+            <div class="mgr-body">
+              <div class="mgr-kpi-row">
+                <div class="kpi-card"><div class="kpi-val blue">247</div><div class="kpi-label">Open cases</div><div class="kpi-delta">↑ +12 vs last week</div></div>
+                <div class="kpi-card"><div class="kpi-val amber">18</div><div class="kpi-label">SLA breach risk</div><div class="kpi-delta">Due in &lt; 48hrs</div></div>
+                <div class="kpi-card"><div class="kpi-val green">34</div><div class="kpi-label">SARs filed</div><div class="kpi-delta">Target: 30 ✓</div></div>
+                <div class="kpi-card"><div class="kpi-val green">4.2d</div><div class="kpi-label">Avg resolution</div><div class="kpi-delta">SLA: 5 days ✓</div></div>
+              </div>
+              <div class="mgr-row2">
+                <div class="mgr-panel">
+                  <div class="mp-title">Team Performance — This Week</div>
+                  <table class="team-table">
+                    <thead><tr><th>Analyst</th><th>Assigned</th><th>Closed</th><th>Avg time</th><th>SLA %</th></tr></thead>
+                    <tbody>
+                      <tr><td>Priya S.</td><td>42</td><td>38</td><td>3.8d</td><td><div style="color:#6EE7B7">97%</div><div class="perf-bar" style="background:rgba(16,185,129,.4);width:97%"></div></td></tr>
+                      <tr><td>Rahul K.</td><td>38</td><td>31</td><td>4.1d</td><td><div style="color:#6EE7B7">94%</div><div class="perf-bar" style="background:rgba(16,185,129,.35);width:94%"></div></td></tr>
+                      <tr><td>Anita M.</td><td>45</td><td>34</td><td>5.8d</td><td><div style="color:#FCD34D">68%</div><div class="perf-bar" style="background:rgba(245,158,11,.4);width:68%"></div></td></tr>
+                      <tr><td>Vikram P.</td><td>39</td><td>36</td><td>3.9d</td><td><div style="color:#6EE7B7">92%</div><div class="perf-bar" style="background:rgba(16,185,129,.35);width:92%"></div></td></tr>
+                      <tr><td>Sunita R.</td><td>33</td><td>30</td><td>4.4d</td><td><div style="color:#6EE7B7">90%</div><div class="perf-bar" style="background:rgba(16,185,129,.3);width:90%"></div></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="mgr-panel">
+                  <div class="mp-title">Alert Volume — 8-Week Trend</div>
+                  <div class="chart-area">
+                    <div class="chart-bar-group"><div class="cb" style="height:55px;background:rgba(239,68,68,0.6);width:6px"></div><div class="cb" style="height:35px;background:rgba(245,158,11,0.5);width:6px"></div><div class="cb" style="height:22px;background:rgba(234,179,8,0.4);width:6px"></div></div>
+                    <div class="chart-bar-group"><div class="cb" style="height:48px;background:rgba(239,68,68,0.6);width:6px"></div><div class="cb" style="height:30px;background:rgba(245,158,11,0.5);width:6px"></div><div class="cb" style="height:20px;background:rgba(234,179,8,0.4);width:6px"></div></div>
+                    <div class="chart-bar-group"><div class="cb" style="height:60px;background:rgba(239,68,68,0.6);width:6px"></div><div class="cb" style="height:40px;background:rgba(245,158,11,0.5);width:6px"></div><div class="cb" style="height:25px;background:rgba(234,179,8,0.4);width:6px"></div></div>
+                    <div class="chart-bar-group"><div class="cb" style="height:42px;background:rgba(239,68,68,0.6);width:6px"></div><div class="cb" style="height:28px;background:rgba(245,158,11,0.5);width:6px"></div><div class="cb" style="height:18px;background:rgba(234,179,8,0.4);width:6px"></div></div>
+                    <div class="chart-bar-group"><div class="cb" style="height:50px;background:rgba(239,68,68,0.6);width:6px"></div><div class="cb" style="height:33px;background:rgba(245,158,11,0.5);width:6px"></div><div class="cb" style="height:21px;background:rgba(234,179,8,0.4);width:6px"></div></div>
+                    <div class="chart-bar-group"><div class="cb" style="height:38px;background:rgba(239,68,68,0.6);width:6px"></div><div class="cb" style="height:25px;background:rgba(245,158,11,0.5);width:6px"></div><div class="cb" style="height:16px;background:rgba(234,179,8,0.4);width:6px"></div></div>
+                    <div class="chart-bar-group"><div class="cb" style="height:52px;background:rgba(239,68,68,0.6);width:6px"></div><div class="cb" style="height:34px;background:rgba(245,158,11,0.5);width:6px"></div><div class="cb" style="height:22px;background:rgba(234,179,8,0.4);width:6px"></div></div>
+                    <div class="chart-bar-group"><div class="cb" style="height:65px;background:rgba(239,68,68,0.8);width:6px;border:1px solid rgba(239,68,68,0.8)"></div><div class="cb" style="height:42px;background:rgba(245,158,11,0.6);width:6px"></div><div class="cb" style="height:28px;background:rgba(234,179,8,0.5);width:6px"></div></div>
+                  </div>
+                  <div class="chart-labels"><div class="cl">W1</div><div class="cl">W2</div><div class="cl">W3</div><div class="cl">W4</div><div class="cl">W5</div><div class="cl">W6</div><div class="cl">W7</div><div class="cl">W8 ↑</div></div>
+                  <div style="display:flex;gap:.75rem;margin-top:.5rem">
+                    <div class="eg-leg-item"><div class="eg-leg-dot" style="background:#EF4444"></div>Critical</div>
+                    <div class="eg-leg-item"><div class="eg-leg-dot" style="background:#F59E0B"></div>High</div>
+                    <div class="eg-leg-item"><div class="eg-leg-dot" style="background:#EAB308"></div>Medium</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dec-item reveal" style="padding-top:1.5rem;border-top:none">
+          <div class="dec-num">↑</div>
+          <div><div class="dec-title">Managing compliance by WhatsApp → managing compliance by data</div><div class="dec-body">Every compliance manager I interviewed had the same problem: they found out about SLA breaches when an analyst told them, not from their system. The manager dashboard solves this with real-time visibility — not a weekly report, not an email. The SLA breach risk card (18 cases due in less than 48 hours) is the most important metric on this screen. It replaces 20 WhatsApp messages per day with one dashboard number.</div><span class="dec-tag">UX principle: Proactive over reactive</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AUDIT TRAIL -->
+    <div class="screen-display" id="sc-audit">
+      <div class="container">
+        <div class="dash-shell">
+          <div class="dash-topbar">
+            <div class="dash-dots"><div class="dash-dot dd-r"></div><div class="dash-dot dd-a"></div><div class="dash-dot dd-g"></div></div>
+            <div class="dash-title-bar">Audit Trail · Read-only · 8,432 events recorded</div>
+            <div class="dash-actions"><div class="dash-act">Export CSV</div><div class="dash-act" style="color:#6EE7B7">🔒 Read-only</div></div>
+          </div>
+          <div class="dash-body">
+            <div class="dash-sidebar"><div class="ds-icon">⬡</div><div class="ds-icon">◈</div><div class="ds-icon">◉</div><div class="ds-icon active">▲</div><div class="ds-icon" style="margin-top:auto">⚙</div></div>
+            <div class="audit-body">
+              <div class="audit-filter">
+                <span class="af-pill on">All actions</span>
+                <span class="af-pill">Case decisions</span>
+                <span class="af-pill">Document access</span>
+                <span class="af-pill">SAR filings</span>
+                <span class="af-pill">System events</span>
+              </div>
+              <div class="anomaly-banner">
+                <div class="ab-icon">⚠</div>
+                <div class="ab-text"><strong>Anomaly detected — requires review</strong>Analyst reviewed 47 cases in 90 minutes (10:14–11:44 AM) — significantly above normal rate. Possible indication of bulk dismissal without proper review. Flagged for compliance manager attention.</div>
+              </div>
+              <div class="audit-table-wrap">
+                <div class="audit-row head">
+                  <div>Timestamp</div><div>User</div><div>Action</div><div>Details</div><div>Case ID</div>
+                </div>
+                <div class="audit-row">
+                  <div class="at-time">14:32:07</div><div class="at-user">Priya S.</div><div><span class="at-action aa-escalate">Escalated</span></div><div class="at-detail">Case escalated to L2 — Structuring pattern confirmed</div><div class="at-case">ALT-9847</div>
+                </div>
+                <div class="audit-row">
+                  <div class="at-time">14:28:14</div><div class="at-user">Priya S.</div><div><span class="at-action aa-view">Viewed</span></div><div class="at-detail">Entity graph accessed — Sunrise Exports network</div><div class="at-case">ALT-9847</div>
+                </div>
+                <div class="audit-row">
+                  <div class="at-time">13:55:02</div><div class="at-user">Rahul K.</div><div><span class="at-action aa-sar">SAR Filed</span></div><div class="at-detail">SAR submitted to FIU-IND · Ref: SAR-2026-0341</div><div class="at-case">ALT-9801</div>
+                </div>
+                <div class="audit-row">
+                  <div class="at-time">13:22:47</div><div class="at-user">Anita M.</div><div><span class="at-action aa-dismiss">Dismissed</span></div><div class="at-detail">False positive — Dormant account reactivated legitimately</div><div class="at-case">ALT-9782</div>
+                </div>
+                <div class="audit-row">
+                  <div class="at-time">12:44:19</div><div class="at-user">Vikram P.</div><div><span class="at-action aa-view">Viewed</span></div><div class="at-detail">Transaction history accessed — 90-day view</div><div class="at-case">ALT-9819</div>
+                </div>
+                <div class="audit-row">
+                  <div class="at-time">12:11:33</div><div class="at-user">Sunita R.</div><div><span class="at-action aa-escalate">Escalated</span></div><div class="at-detail">Escalated to compliance manager — SLA breach imminent</div><div class="at-case">ALT-9798</div>
+                </div>
+                <div class="audit-row">
+                  <div class="at-time">11:48:05</div><div class="at-user">Rahul K.</div><div><span class="at-action aa-view">Viewed</span></div><div class="at-detail">Case detail accessed</div><div class="at-case">ALT-9804</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dec-item reveal" style="padding-top:1.5rem;border-top:none">
+          <div class="dec-num">↑</div>
+          <div><div class="dec-title">Audit trail as a first-class feature — not a compliance afterthought</div><div class="dec-body">Most AML tools log user actions in a database table that only the tech team can access. Nexus surfaces the audit trail as a navigable, searchable, anomaly-detecting screen that compliance managers can access directly. The anomaly detection banner — "47 cases reviewed in 90 minutes" — surfaces potential data integrity issues before they become regulatory problems. The "Read-only" badge in the top bar is a deliberate design decision: it signals immutability as a trust property, not a limitation.</div><span class="dec-tag">UX principle: Transparency as trust</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UX DECISIONS -->
+<section style="padding:6rem 0;border-top:1px solid var(--border)" id="decisions">
+  <div class="container">
+    <div class="eyebrow reveal"><span class="ey-num">07</span><span class="ey-line"></span><span class="ey-text">5 decisions that prove senior thinking</span></div>
+    <p class="section-h reveal">These are the decisions most designers never make — because most designers have never designed for financial crime.</p>
+    <div class="decisions-list">
+      <div class="dec-item reveal"><div class="dec-num">01</div><div><div class="dec-title">Progressive disclosure on the alert queue</div><div class="dec-body">Show only 6 data points per alert in the list view. Everything else appears when the case is opened. Junior designers show all 12 available data fields. Senior designers ask: what does the analyst need to decide whether to open this case? Only that. Nothing else.</div><span class="dec-tag">Cognitive load reduction</span></div></div>
+      <div class="dec-item reveal"><div class="dec-num">02</div><div><div class="dec-title">Risk score with reasoning, not just a number</div><div class="dec-body">"Risk score: 94 — Unusual cash deposits + cross-border transfers + PEP relationship" enables decision-making. "Risk score: 94" enables guessing. An analyst cannot file a legally defensible Suspicious Activity Report based on a number with no explanation. Nexus surfaces the contributing factors inline at every point where a decision is made.</div><span class="dec-tag">Explanatory design</span></div></div>
+      <div class="dec-item reveal"><div class="dec-num">03</div><div><div class="dec-title">Keyboard-first interaction design — documented as a feature</div><div class="dec-body">AML analysts review hundreds of cases per shift. Mouse-only interfaces are physically exhausting and cognitively inefficient at that volume. Nexus is designed keyboard-first: Tab to next alert, E to escalate, D to dismiss, N to add note, G to open entity graph. This is accessibility design and power-user design simultaneously — documented explicitly in the design system as a keyboard shortcut vocabulary.</div><span class="dec-tag">Accessibility · Power user</span></div></div>
+      <div class="dec-item reveal"><div class="dec-num">04</div><div><div class="dec-title">Entity graph filtered to 8 nodes by default</div><div class="dec-body">A network graph with 50 nodes showing every connection an entity has ever had is visually impressive and analytically useless. Nexus defaults to showing the 8 highest-risk connections, filtered by risk score. Users can expand to see all connections with one click. This is the difference between information overload and actionable intelligence — a distinction that takes years of working in complex data environments to internalise.</div><span class="dec-tag">Contextual filtering · Data visualisation</span></div></div>
+      <div class="dec-item reveal"><div class="dec-num">05</div><div><div class="dec-title">Audit trail with AI anomaly detection — surfaced to managers</div><div class="dec-body">Every compliance system logs actions. Nexus is the first to make the audit log navigable and intelligent. The anomaly detection layer — "47 cases reviewed in 90 minutes" — surfaces patterns that indicate either a data integrity problem or analyst misconduct before they become regulatory issues. The read-only badge signals immutability as a trust property. The compliance manager can view it directly, not through the IT team.</div><span class="dec-tag">Proactive compliance design</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- AI TABLE -->
+<section style="padding:5rem 0;border-top:1px solid var(--border)">
+  <div class="container">
+    <div class="eyebrow reveal"><span class="ey-num">08</span><span class="ey-line"></span><span class="ey-text">AI contribution map</span></div>
+    <p class="section-h reveal">Exactly what AI contributed and exactly what I decided.</p>
+    <table class="ai-table reveal">
+      <thead><tr><th>Stage</th><th>Tool</th><th>AI contribution</th><th>My contribution</th></tr></thead>
+      <tbody>
+        <tr><td>Layout foundations</td><td>Figma AI Make</td><td>Generated 3-column layout structure for case detail screen</td><td>Rebuilt with AML-specific column logic — metadata left, transactions centre, decision right</td></tr>
+        <tr><td>Alert queue table</td><td>Figma AI Make</td><td>Generic data table with standard columns</td><td>Replaced with risk colour vocabulary, severity badges, progressive disclosure hover, unread state</td></tr>
+        <tr><td>Dashboard overview</td><td>Google Stitch</td><td>Generic manager dashboard with KPI cards and charts</td><td>Replaced generic KPIs with AML-specific: SLA breach risk, SAR filing rate, resolution time vs SLA</td></tr>
+        <tr><td>Entity graph</td><td>None</td><td>—</td><td>Designed entirely from scratch — no AI tool generates meaningful compliance network graphs</td></tr>
+        <tr><td>Colour system</td><td>None</td><td>—</td><td>Full semantic risk colour vocabulary — every colour carries a specific compliance meaning</td></tr>
+        <tr><td>All microcopy</td><td>None</td><td>—</td><td>Every label, tooltip, button, error message — written with AML domain knowledge</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section style="padding:6rem 0;border-top:1px solid var(--border)" id="outcomes">
+  <div class="container">
+    <div class="eyebrow reveal"><span class="ey-num">09</span><span class="ey-line"></span><span class="ey-text">If Nexus shipped</span></div>
+    <p class="section-h reveal" style="margin-bottom:2.5rem">The metrics I would track from day one.</p>
+    <div class="metrics-grid reveal">
+      <div class="metric-card"><div class="metric-target">&lt; 5 min</div><div class="metric-name">Avg triage time per alert</div><div class="metric-why">Current industry average: 12-15 minutes per alert. Nexus's unified context view targets 5 minutes through progressive disclosure and keyboard workflows.</div></div>
+      <div class="metric-card"><div class="metric-target">&lt; 2%</div><div class="metric-name">SLA breach rate</div><div class="metric-why">Real-time manager visibility replaces reactive WhatsApp notification. Target: less than 2% of cases breach their deadline — down from 8-12% in typical installations.</div></div>
+      <div class="metric-card"><div class="metric-target">&gt; 95%</div><div class="metric-name">SAR defensibility rate</div><div class="metric-why">Risk score with explanation + audit trail = every SAR submission is fully documented. Target: 95%+ of SARs withstand FIU-IND scrutiny without rework.</div></div>
+      <div class="metric-card"><div class="metric-target">&lt; 30s</div><div class="metric-name">Context gathering time</div><div class="metric-why">Currently: analysts switch between 4 screens and take 12-15 minutes to gather case context. Nexus's 3-column case detail eliminates switching entirely. Target: under 30 seconds.</div></div>
+      <div class="metric-card"><div class="metric-target">&gt; 4.5</div><div class="metric-name">Analyst satisfaction NPS</div><div class="metric-why">AML tooling has some of the lowest user satisfaction scores in enterprise software. A tool that respects how analysts actually work should score significantly above industry average (typically 2-3).</div></div>
+      <div class="metric-card"><div class="metric-target">0</div><div class="metric-name">Audit trail integrity issues</div><div class="metric-why">AI anomaly detection on the audit trail surfaces data integrity issues before they reach regulators. Target: zero undetected anomalies per quarter. This is a compliance outcome, not a UX metric — and that's the point.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="demo-section">
+  <div class="container">
+    <div class="demo-inner reveal">
+      <div>
+        <p style="font-family:var(--mono);font-size:.7rem;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1rem">Interactive prototype</p>
+        <p class="demo-h">Experience<br>Nexus<span>.</span></p>
+        <p class="demo-p">The full alert queue, case detail investigation flow, entity relationship graph, compliance manager dashboard, and audit trail — all designed and prototyped in Figma. This is what enterprise AML UX should look like.</p>
+        <div>
+          <a href="#" class="demo-btn">Open prototype ↗</a>
+          <a href="#" class="demo-sec-btn">View Figma file</a>
+        </div>
+      </div>
+      <div class="demo-visual">
+        <div class="demo-frame">
+          <div class="df-label">Nexus at a glance</div>
+          <div class="df-stat-row">
+            <div class="df-stat"><div class="df-stat-n">5</div><div class="df-stat-l">Screens</div></div>
+            <div class="df-stat"><div class="df-stat-n">3</div><div class="df-stat-l">User types</div></div>
+          </div>
+          <div class="df-stat-row">
+            <div class="df-stat"><div class="df-stat-n">AML</div><div class="df-stat-l">Domain</div></div>
+            <div class="df-stat"><div class="df-stat-n">B2B</div><div class="df-stat-l">SaaS</div></div>
+          </div>
+          <div class="df-note">Built on real professional experience designing AML compliance tooling. Nexus represents the definitive vision of what enterprise AML UX should be.</div>
+          <div class="df-btn-wrap">
+            <button class="df-btn df-btn-pri">View prototype →</button>
+            <button class="df-btn df-btn-sec">Read case study</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-inner">
+      <div><div class="foot-logo">Nexus<span>.</span></div><div class="foot-by">Case study by Swathi Susarla · UX/UI & Product Designer · Hyderabad</div></div>
+      <div class="foot-links">
+        <a href="mailto:swathisusarla04@gmail.com">swathisusarla04@gmail.com</a>
+        <a href="https://www.linkedin.com/in/swathi-susarla" target="_blank">LinkedIn — Swathi_Susarla</a>
+        <a href="https://www.behance.net/swathisusarla" target="_blank">Behance — Swathi_Susarla</a>
+      </div>
+      <div class="foot-copy">© 2026 Swathi Susarla<br>Concept portfolio project<br>Domain informed by professional AML experience</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Screen tabs
+function showScreen(id, btn){
+  document.querySelectorAll('.screen-display').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('sc-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach((entry,i)=>{
+    if(entry.isIntersecting){
+      const el = entry.target;
+      const siblings = Array.from(el.parentElement.querySelectorAll('.reveal'));
+      const idx = siblings.indexOf(el);
+      setTimeout(()=>el.classList.add('visible'), idx * 90);
+      observer.unobserve(el);
+    }
+  });
+},{threshold:0.08,rootMargin:'0px 0px -30px 0px'});
+reveals.forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
